@@ -1,0 +1,23 @@
+---
+# tasks file for php
+- name: Install php 7 with the most common packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - php70
+    - php70-gd
+    - php70-imap
+    - php70-mbstring
+    - php70-mysqlnd
+    - php70-apache
+    - php70-pdo
+    - php70-pecl-apcu
+  notify: restart php70-apache
+- name: Upload index.php file to the remote web directory
+  copy:
+    src: index.php
+    dest: /var/www/html
+    owner: ec2-user
+    group: ec2-user
+    
